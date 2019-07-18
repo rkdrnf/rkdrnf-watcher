@@ -12,6 +12,8 @@ By calling step() repetitively according to any refresh cycle you intended, you 
 
 # Example
 ```
+import { Component } from "rkdrnf-watcher";
+
 class MyComponent extends Component {
     ...
     constructor() {
