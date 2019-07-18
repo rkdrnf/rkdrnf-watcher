@@ -1,4 +1,6 @@
 const TestComponent = require("./testComponent");
+const TestClassA = require("./testClassA");
+const TestClassB = require("./testClassB");
 
 function setupComp() {
     const comp = new TestComponent();
@@ -16,8 +18,8 @@ function logChanges(testName, prop, changes) {
     console.log(`#${testName}\n [${prop}] changed from: ${JSON.stringify(old)}, to: ${JSON.stringify(val)}`);
 }
 
-test1Name = 'Assign object of same type';
-test1LogFunc = (prop, d) => logChanges(test1Name, prop, d);
+const test1Name = 'Assign object of same type';
+const test1LogFunc = (prop, d) => logChanges(test1Name, prop, d);
 test(test1Name, () => {
     const comp = setupComp();
 
@@ -56,8 +58,8 @@ test(test1Name, () => {
     });
 });
 
-test2Name = 'Assign object of different type';
-test2LogFunc = (prop, d) => logChanges(test2Name, prop, d);
+const test2Name = 'Assign object of different type';
+const test2LogFunc = (prop, d) => logChanges(test2Name, prop, d);
 test(test2Name, () => {
     const comp = setupComp();
 
@@ -96,8 +98,8 @@ test(test2Name, () => {
     });
 });
 
-test3Name = 'Add key to object';
-test3LogFunc = (prop, d) => logChanges(test3Name, prop, d);
+const test3Name = 'Add key to object';
+const test3LogFunc = (prop, d) => logChanges(test3Name, prop, d);
 test(test3Name, () => {
     const comp = setupComp();
 
@@ -122,8 +124,8 @@ test(test3Name, () => {
     });
 });
 
-test4Name = 'Change existing key';
-test4LogFunc = (prop, d) => logChanges(test4Name, prop, d);
+const test4Name = 'Change existing key';
+const test4LogFunc = (prop, d) => logChanges(test4Name, prop, d);
 test(test4Name, () => {
     const comp = setupComp();
 
@@ -151,8 +153,8 @@ test(test4Name, () => {
     });
 });
 
-test5Name = 'Assign same value';
-test5LogFunc = (prop, d) => logChanges(test5Name, prop, d);
+const test5Name = 'Assign same value';
+const test5LogFunc = (prop, d) => logChanges(test5Name, prop, d);
 test(test5Name, () => {
     const comp = setupComp();
 
@@ -180,8 +182,8 @@ test(test5Name, () => {
 
 });
 
-test6Name = 'Do nothing';
-test6LogFunc = (prop, d) => logChanges(test6Name, prop, d);
+const test6Name = 'Do nothing';
+const test6LogFunc = (prop, d) => logChanges(test6Name, prop, d);
 test(test6Name, () => {
     const comp = setupComp();
 
@@ -203,8 +205,8 @@ test(test6Name, () => {
     expect(stringCallback.mock.calls.length).toBe(0);
 });
 
-test7Name = 'Multiple Loop';
-test7LogFunc = (prop, d) => logChanges(test7Name, prop, d);
+const test7Name = 'Multiple Loop';
+const test7LogFunc = (prop, d) => logChanges(test7Name, prop, d);
 test(test7Name, () => {
     const comp = setupComp();
 
@@ -222,8 +224,8 @@ test(test7Name, () => {
     expect(objCallback.mock.calls.length).toBe(1);
 });
 
-test8Name = 'Multiple Loop2';
-test8LogFunc = (prop, d) => logChanges(test8Name, prop, d);
+const test8Name = 'Multiple Loop2';
+const test8LogFunc = (prop, d) => logChanges(test8Name, prop, d);
 test(test8Name, () => {
     const comp = setupComp();
 
@@ -243,8 +245,8 @@ test(test8Name, () => {
     expect(objCallback.mock.calls.length).toBe(4);
 });
 
-test9Name = 'Change old object';
-test9LogFunc = (prop, d) => logChanges(test9Name, prop, d);
+const test9Name = 'Change old object';
+const test9LogFunc = (prop, d) => logChanges(test9Name, prop, d);
 test(test9Name, () => {
     const comp = setupComp();
 
@@ -266,8 +268,8 @@ test(test9Name, () => {
     expect(objCallback.mock.calls.length).toBe(2);
 });
 
-test10Name = 'Preserve old value through multiple changes in a single loop';
-test10LogFunc = (prop, d) => logChanges(test10Name, prop, d);
+const test10Name = 'Preserve old value through multiple changes in a single loop';
+const test10LogFunc = (prop, d) => logChanges(test10Name, prop, d);
 test(test10Name, () => {
     const comp = setupComp();
 
@@ -284,4 +286,92 @@ test(test10Name, () => {
         old: {},
         val: { p: 1, q: 2, r: 3 }
     });
+});
+
+const test11Name = 'Array operations';
+const test11LogFunc = (prop, d) => logChanges(test11Name, prop, d);
+test(test11Name, () => {
+    const comp = setupComp();
+
+    const objCallback = jest.fn(test11LogFunc);
+
+    comp.watchForTest("testArr", objCallback);
+
+    comp.testArr.push(1, 2, 3);
+    comp.step();
+
+    expect(objCallback.mock.calls[0][1]).toEqual({
+        old: [],
+        val: [1, 2, 3]
+    });
+
+    comp.testArr.splice(0, 1);
+    comp.step();
+
+    expect(objCallback.mock.calls.length).toBe(2);
+    expect(objCallback.mock.calls[1][1]).toEqual({
+        old: [1, 2, 3],
+        val: [2, 3]
+    });
+});
+
+const test12Name = 'Array operations';
+const test12LogFunc = (prop, d) => logChanges(test12Name, prop, d);
+test(test12Name, () => {
+    const comp = setupComp();
+
+    const objCallback = jest.fn(test12LogFunc);
+
+    comp.watchForTest("testArr", objCallback);
+
+    comp.testArr.push(1, 2, 3);
+    comp.step();
+
+    expect(objCallback.mock.calls[0][1]).toEqual({
+        old: [],
+        val: [1, 2, 3]
+    });
+
+    comp.testArr.splice(0, 1);
+    comp.step();
+
+    expect(objCallback.mock.calls.length).toBe(2);
+    expect(objCallback.mock.calls[1][1]).toEqual({
+        old: [1, 2, 3],
+        val: [2, 3]
+    });
+});
+
+const test13Name = 'Different class of same signature';
+const test13LogFunc = (prop, d) => logChanges(test13Name, prop, d);
+test(test13Name, () => {
+    const comp = setupComp();
+
+    comp.testObj = new TestClassA();
+
+    const objCallback = jest.fn(test13LogFunc);
+
+    comp.watchForTest("testObj", objCallback);
+
+    comp.testObj = new TestClassB();
+    comp.step();
+
+    expect(objCallback.mock.calls.length).toBe(1);
+});
+
+test14Name = 'Different instance of same class';
+test14LogFunc = (prop, d) => logChanges(test14Name, prop, d);
+test(test14Name, () => {
+    const comp = setupComp();
+
+    comp.testObj = new TestClassA();
+
+    const objCallback = jest.fn(test14LogFunc);
+
+    comp.watchForTest("testObj", objCallback);
+
+    comp.testObj = new TestClassA();
+    comp.step();
+
+    expect(objCallback.mock.calls.length).toBe(0);
 });

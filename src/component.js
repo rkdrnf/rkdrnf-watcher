@@ -105,7 +105,7 @@ class Component {
         }
 
         if (this._isNotNullObject(old)) {
-            return Object.assign({}, old);
+            return Object.assign(Object.create(Object.getPrototypeOf(old)), old);
         }
 
         return old;
@@ -165,6 +165,10 @@ class Component {
 
     compareObject(a, b) {
         if (Object.keys(a).length !== Object.keys(b).length) {
+            return false;
+        }
+
+        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {
             return false;
         }
 
