@@ -335,11 +335,24 @@ test(test12Name, () => {
     comp.testArr.splice(0, 1);
     comp.step();
 
-    expect(objCallback.mock.calls.length).toBe(2);
     expect(objCallback.mock.calls[1][1]).toEqual({
         old: [1, 2, 3],
         val: [2, 3]
     });
+
+    comp.testArr.sort((a, b) => {
+        if (a > b) return -1;
+        if (a === b) return 0;
+        return 1;
+    });
+    comp.step();
+
+    expect(objCallback.mock.calls[2][1]).toEqual({
+        old: [2, 3],
+        val: [3, 2]
+    });
+
+    expect(objCallback.mock.calls.length).toBe(3);
 });
 
 const test13Name = 'Different class of same signature';
