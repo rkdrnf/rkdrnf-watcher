@@ -178,10 +178,9 @@ class Component {
 
     dispatch(prop) {
         const { old, val } = this._watched.get(prop);
-        console.log(`[${prop}] changed from: ${JSON.stringify(old)}, to: ${JSON.stringify(val)}`);
 
         const callback = this._callbacks.get(prop);
-        callback({
+        callback(prop, {
             old: old,
             val: val
         });
