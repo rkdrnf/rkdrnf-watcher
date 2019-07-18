@@ -1,6 +1,6 @@
 {
   "name": "rkdrnf-watcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "watch objects using proxy",
   "main": "dist/rkdrnf-watcher.js",
   "types": "./src/index.d.ts",
