@@ -8,7 +8,7 @@ module.exports = {
     filename: 'rkdrnf-watcher.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
-    library: 'lib',
+    library: 'rkdrnfWatcher',
     umdNamedDefine: true,
     globalObject: `(typeof self !== 'undefined' ? self : this)`
   }
