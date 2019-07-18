@@ -1,12 +1,13 @@
 {
   "name": "rkdrnf-watcher",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "watch objects using proxy",
-  "main": "src/index.js",
+  "main": "dist/rkdrnf-watcher.js",
   "types": "./src/index.d.ts",
   "scripts": {
     "test": "jest",
-    "start": "node scripts/index.js"
+    "start": "node scripts/index.js",
+    "build": "webpack -p"
   },
   "author": "rkdrnf",
   "license": "ISC",
